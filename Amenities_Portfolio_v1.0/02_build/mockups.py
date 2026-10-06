@@ -47,9 +47,9 @@ def fit_font(draw, fam, text, max_w, size, wght=400, min_size=8):
     return font(fam, min_size, wght)
 
 def arabic(text):
-    import arabic_reshaper
-    from bidi.algorithm import get_display
-    return get_display(arabic_reshaper.reshape(text))
+    """Pillow is built with raqm: shaping and bidi are native, so the string is passed through unchanged
+    and drawn with direction="rtl"."""
+    return text
 
 def logo(kind="symbol", colour="black", height=100):
     name = {"symbol": "GEM_Symbol_", "lockup": "GEM_Logo_Horizontal_"}[kind] + colour.capitalize() + ".png"
@@ -110,7 +110,7 @@ def label_panel(w, h, colour, product, func, lines=None, bilingual=False, tier="
     d.text((pad, y), product, font=f_prod, fill=ink); y += int(f_prod.size * 1.3)
     if bilingual:
         f_ar = font("arabic", int(h * 0.09), 400)
-        d.text((w - pad, y - int(h * 0.02)), arabic(bilingual), font=f_ar, fill=ink, anchor="ra"); y += int(h * 0.12)
+        d.text((w - pad, y - int(h * 0.02)), arabic(bilingual), font=f_ar, fill=ink, anchor="ra", direction="rtl", language="ar"); y += int(h * 0.12)
     d.text((pad, y), func, font=f_func, fill=ink); y += int(h * 0.08)
     for ln in (lines or ["[QUANTITY] · metric first", "[REQUIRED MARKET INFORMATION]", "[SKU] · ARTWORK v[PENDING]"]):
         fl = fit_font(d, "inter", ln, inner, int(h * 0.038)); d.text((pad, y), ln, font=fl, fill=ink); y += int(h * 0.055)
