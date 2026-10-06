@@ -1,3 +1,7 @@
 GEM_V3_RC2/02_renders/
 *.png
 PartB_RC2/03_renders/
+Amenities_Portfolio_v1.0/03_renders/
+Amenities_Portfolio_v1.0/02_build/node_modules/
+Amenities_Portfolio_v1.0/02_build/package*.json
+Amenities_Portfolio_v1.0/00_source/partA_media/
