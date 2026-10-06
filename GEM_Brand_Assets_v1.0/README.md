@@ -22,11 +22,9 @@ Part A states that the rest of the logo set is "named, not faked", and that prop
 
 Rebuild: `python3 02_build/build_assets.py` (needs fontTools and the three brand font files).
 
-## Logo replicas (03_logo_replica) · added
-Five vector replicas of the supplied logo set (Part A slide 27): horizontal lockup in beige, black and white; symbol in beige and black. Each SVG is a single filled path produced by upsampling the supplied PNG's alpha channel and tracing it (`02_build/trace_logos.py`). No geometry was redrawn by hand, and nothing was mirrored, recoloured or altered.
+## Official logo kit (04_official_kit) · supplied by the project owner
+The owner supplied a vector master kit ("GEM Master Asset Kit V3.0": official paths from the Illustrator PDF, no redraw). It contains horizontal, stacked, symbol and no-spark symbol in Ink, Beige, Black and White (SVG, PDF, EPS, PNG, 2u clearspace versions), favicon and app icon set, avatars, a motion reveal, and `logo/metrics.json`. File hashes are in `SHA256SUMS.txt`.
 
-**Status: WORKING REPLICA, PENDING PRODUCTION MASTER (VAL-02, H16, H17).** Limits you should know before use:
-- The source rasters are only 654 x 207 and 229 x 207 px, so curve edges are approximations of the supplied pixels, not the original construction. Do not use for print, fabrication, embroidery, engraving or favicon release (DS05).
-- The small ™ mark did not survive tracing at this resolution and is reduced to specks. Use the replica only where the ™ is carried separately, or wait for the production master.
-- Part A prohibits auto-tracing for production masters. These files are provided at the owner's request as working digital layout references and replace nothing in the approval path.
-- Still not created because the guidelines have no source for them: stacked configuration, no-spark micro mark, white standalone symbol.
+This supersedes the traced replicas made earlier in this branch, which were removed. The kit supplies the stacked configuration, the no-spark micro mark and the white standalone symbol that Part A lists as not supplied.
+
+Evidence gates stay open until the Brand Owner records the kit as the production master: VAL-02 (production masters), VAL-03 and VAL-04 (trademark and ownership), H21 (artwork ID and version in file names; kit names do not follow X12). Do not label the kit a released master until then.
