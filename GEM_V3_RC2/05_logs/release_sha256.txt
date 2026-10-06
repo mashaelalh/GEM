@@ -1,0 +1,6 @@
+f4b21a9c41be583019b45e2ddd9d5bfbde6ab9b2c1a46e95a074229966369712  GEM Brand Guidelines V3.0 — Part A — RC2 (review export).pdf
+5746a964c07f893427fd4b7dc9fb5b313e6f7b395b525df05297d19336242f0f  GEM Brand Guidelines V3.0 — Part A — RC2.pptx
+20ddec23ba7e01dfcee30207a50fcce51a377e4df03df538e8321071bebab070  GEM Production Standards V3.0 — Part C — RC2 (review export).pdf
+6a6e08a7655050a69b8e574dcc1e8fdaa02263f60ec5cf02149033acf78ded0c  GEM Production Standards V3.0 — Part C — RC2.pptx
+d1e629e6ff0a5d36b9539c6f2935d3582a7d24cfbe97b66725dc4b0de1580f5e  PartB_RC2_Exact_Patch_Spec.md
+41d8c7c03d62e1016c1d888d2bd4a2f1d79ef0897fae4aa41a7429b1f04d4db3  README_PartB.txt
