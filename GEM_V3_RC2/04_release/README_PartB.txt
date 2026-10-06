@@ -1,0 +1,1 @@
+Part B: no editable source in the workspace. The review PDF GEM_Digital_Design_System_V3.0_1.pdf in 00_originals is unchanged (SHA-256 f5905ee92590263e45a745bf6768c74c1f74696caeddbea7d8bae3cb6b64eb5c). Apply PartB_RC2_Exact_Patch_Spec.md to the source and regenerate.
