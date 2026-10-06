@@ -4,7 +4,8 @@
 
 | File | Content |
 |---|---|
-| `GEM_Amenities_and_Packaging_Concept_Portfolio_v1.0.pptx` | Editable deck, 24 slides, 16:9 |
+| `GEM_Amenities_and_Packaging_Concept_Portfolio_v1.0.pptx` | Editable deck, 24 slides, 16:9, deck-resolution images (3 MB) |
+| `GEM_Amenities_and_Packaging_Concept_Portfolio_v1.0_fullres.pptx` | Same deck with full-resolution mockups embedded (55 MB; not committed to git, rebuild with `02_build/build_deck.js`) |
 | `GEM_Amenities_and_Packaging_Concept_Portfolio_v1.0.pdf` | Review copy (tagged export, brand fonts embedded) |
 | `mockups/` | High-resolution PNG mockups used in the deck (`../01_mockups` source) |
 | `Concept_Product_Register.md` | Product · category · concept status · packaging format · validation required |
