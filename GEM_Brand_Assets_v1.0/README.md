@@ -21,3 +21,12 @@ Part A states that the rest of the logo set is "named, not faked", and that prop
 - Print colour values (Pantone, CMYK): not specified in the guidelines
 
 Rebuild: `python3 02_build/build_assets.py` (needs fontTools and the three brand font files).
+
+## Logo replicas (03_logo_replica) · added
+Five vector replicas of the supplied logo set (Part A slide 27): horizontal lockup in beige, black and white; symbol in beige and black. Each SVG is a single filled path produced by upsampling the supplied PNG's alpha channel and tracing it (`02_build/trace_logos.py`). No geometry was redrawn by hand, and nothing was mirrored, recoloured or altered.
+
+**Status: WORKING REPLICA, PENDING PRODUCTION MASTER (VAL-02, H16, H17).** Limits you should know before use:
+- The source rasters are only 654 x 207 and 229 x 207 px, so curve edges are approximations of the supplied pixels, not the original construction. Do not use for print, fabrication, embroidery, engraving or favicon release (DS05).
+- The small ™ mark did not survive tracing at this resolution and is reduced to specks. Use the replica only where the ™ is carried separately, or wait for the production master.
+- Part A prohibits auto-tracing for production masters. These files are provided at the owner's request as working digital layout references and replace nothing in the approval path.
+- Still not created because the guidelines have no source for them: stacked configuration, no-spark micro mark, white standalone symbol.
