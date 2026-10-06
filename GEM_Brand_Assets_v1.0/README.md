@@ -21,3 +21,10 @@ Part A states that the rest of the logo set is "named, not faked", and that prop
 - Print colour values (Pantone, CMYK): not specified in the guidelines
 
 Rebuild: `python3 02_build/build_assets.py` (needs fontTools and the three brand font files).
+
+## Official logo kit (04_official_kit) · supplied by the project owner
+The owner supplied a vector master kit ("GEM Master Asset Kit V3.0": official paths from the Illustrator PDF, no redraw). It contains horizontal, stacked, symbol and no-spark symbol in Ink, Beige, Black and White (SVG, PDF, EPS, PNG, 2u clearspace versions), favicon and app icon set, avatars, a motion reveal, and `logo/metrics.json`. File hashes are in `SHA256SUMS.txt`.
+
+This supersedes the traced replicas made earlier in this branch, which were removed. The kit supplies the stacked configuration, the no-spark micro mark and the white standalone symbol that Part A lists as not supplied.
+
+Evidence gates stay open until the Brand Owner records the kit as the production master: VAL-02 (production masters), VAL-03 and VAL-04 (trademark and ownership), H21 (artwork ID and version in file names; kit names do not follow X12). Do not label the kit a released master until then.
