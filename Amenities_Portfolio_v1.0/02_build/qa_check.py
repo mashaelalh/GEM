@@ -15,7 +15,7 @@ for i, s in enumerate(prs.slides, 1):
     t = "\n".join(sh.text_frame.text for sh in s.shapes if sh.has_text_frame)
     n = s.notes_slide.notes_text_frame.text if s.has_notes_slide else ""
     texts.append((i, t, n))
-    has_status = bool(re.search(r"CONCEPT|CONDITIONAL|PENDING|REQUIRES", t))
+    has_status = bool(re.search(r"CONCEPT|CONDITIONAL|PENDING|REQUIRE", t, re.I))
     rows.append((f"Slide {i}: status label present", "PASS" if has_status else "FAIL", ""))
     for pat in PROHIBITED:
         for src, body in (("slide", t), ("notes", n)):

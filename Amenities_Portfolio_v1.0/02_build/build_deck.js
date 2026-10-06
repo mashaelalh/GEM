@@ -246,7 +246,7 @@ for (const [no, name, key, func, note, scene] of FAMILY) {
   lockup(s, "Beige", 0.89, 0.89, 0.9);
   s.addShape(pres.ShapeType.ellipse, { x: 8.6, y: 1.4, w: 7.5, h: 7.5, fill: { type: "none" }, line: { color: BEIGE, width: 1 } });
   s.addText("EVERY DETAIL, IN PROPORTION.", { x: 0.89, y: 3.2, w: 7.5, h: 0.8, fontFace: "Jost", fontSize: 30, color: WHITE, charSpacing: 2, margin: 0, isTextBox: true });
-  s.addText("GEM™ — Amenities & Packaging · Concept Product Portfolio", { x: 0.89, y: 4.1, w: 7.5, h: 0.4, fontFace: "Inter", fontSize: 12, color: BEIGE, margin: 0, isTextBox: true });
+  s.addText("GEM™ — Amenities & Packaging  ·  CONCEPT PRODUCT PORTFOLIO", { x: 0.89, y: 4.1, w: 7.5, h: 0.4, fontFace: "Inter", fontSize: 12, color: BEIGE, margin: 0, isTextBox: true });
   s.addText("All products, structures, materials and applications shown are conceptual unless explicitly identified as approved. Final specifications require commercial, supplier, regulatory and production validation.", { x: 0.89, y: 5.3, w: 7.2, h: 0.8, fontFace: "Inter", fontSize: 9.5, color: BEIGE, margin: 0, valign: "top", isTextBox: true });
   s.addText("HOSPITALITY, IN PERFECT PROPORTION", { x: 0.89, y: 6.55, w: 7, h: 0.3, fontFace: "Jost", fontSize: 11, color: BEIGE, charSpacing: 3, margin: 0, isTextBox: true });
   s.addNotes("Closing. The headline is an editorial line for this portfolio; the primary tagline remains HOSPITALITY, IN PERFECT PROPORTION, fixed (B04)."); }
