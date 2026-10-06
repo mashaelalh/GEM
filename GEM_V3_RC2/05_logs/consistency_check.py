@@ -6,7 +6,8 @@ from pptx import Presentation
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 A = ROOT / "GEM_V3_RC2/01_working/A-RC2.pptx"
 C = ROOT / "GEM_V3_RC2/01_working/C-RC2.pptx"
-B = ROOT / "GEM_V3_RC2/00_originals/GEM_Digital_Design_System_V3.0_1.pdf"
+B = ROOT / "PartB_RC2/01_source/B-RC2.pptx"
+BPDF = ROOT / "PartB_RC2/03_renders/after/B-RC2.pdf"
 
 def pptx_text(path):
     prs = Presentation(path); out = []
@@ -31,7 +32,7 @@ def pptx_fonts(path):
             fonts |= set(re.findall(r'typeface="([^"]+)"', z.read(n).decode("utf8")))
     return fonts
 
-docs = {"A": pptx_text(A), "B": pdf_text(B), "C": pptx_text(C)}
+docs = {"A": pptx_text(A), "B": pptx_text(B), "C": pptx_text(C)}
 rows = []  # (check, doc, result, detail)
 
 def hits(doc, pattern, flags=re.I):
@@ -73,16 +74,19 @@ for d in "ABC":
     check("Gate IDs VAL-02 / VAL-07 / AC20 present", d, r"VAL-02.*VAL-07.*AC20", True, flags=re.S)
     check("Six-level packaging hierarchy (T05)", d, r"(Six levels|six levels|six-level)", True)
     check("'Seven levels' absent", d, r"Seven levels", False)
-    check("Tier status CONDITIONAL · AC03 / VAL-01 (A, C)", d, r"AC03[, /]+VAL-01", d != "B")
+    check("Tier status CONDITIONAL · AC03 / VAL-01", d, r"AC03[, /]+VAL-01", True)
     check("No invented production values (Pantone/CMYK/ΔE numbers)", d, r"(Pantone\s*\d{2,}|CMYK\s*\(?\s*\d{1,3}\s*[,/]\s*\d|ΔE\s*[<≤=]?\s*\d|Delta E\s*[<≤=]\s*\d|\b\d+(\.\d+)?\s*(mm|gsm)\b)", False)
     bad = [n for n, t in docs[d] for ln in t.splitlines()
-           if re.search(r"VAL-\d\d[^\n]{0,30}\b(closed|complete|passed|accepted)\b", ln) and not re.match(r"\s*\d+\.\s", ln)]
-    rows.append(("No evidence gate marked complete", d, "PASS" if not bad else "FAIL", f"pages/slides {bad[:8]}" if bad else "none · release-precondition lists ('… closed' before release) excluded"))
+           if re.search(r"VAL-\d\d[^\n]{0,30}\b(closed|complete|passed|accepted)\b", ln) and not re.match(r"\s*\d+\.\s", ln)
+           and not re.match(r"\s*VAL-\d\d( to VAL-\d\d)?(, VAL-\d\d)* closed( or formally deferred)?\.\s*$", ln)]
+    rows.append(("No evidence gate marked complete", d, "PASS" if not bad else "FAIL", f"pages/slides {bad[:8]}" if bad else "none · release-precondition checklist lines ('VAL-xx closed' as a condition before release) excluded"))
 
 fa, fc = pptx_fonts(A), pptx_fonts(C)
 rows.append(("Fonts used in deck (A)", "A", "PASS" if fa <= {"Jost", "Inter", "Noto Sans Arabic"} else "FAIL", ", ".join(sorted(fa))))
+fb = pptx_fonts(B)
+rows.append(("Fonts used in deck (B)", "B", "PASS" if fb <= {"Jost", "Inter", "Noto Sans Arabic", "Courier New"} else "FAIL", ", ".join(sorted(fb)) + " · Courier New = code specimen only, flagged [REQUIRES OWNER]"))
 rows.append(("Fonts used in deck (C)", "C", "PASS" if fc <= {"Jost", "Inter", "Noto Sans Arabic"} else "FAIL", ", ".join(sorted(fc))))
-for label, path in [("A", ROOT / "GEM_V3_RC2/02_renders/A_after/A-RC2.pdf"), ("C", ROOT / "GEM_V3_RC2/02_renders/C_after/C-RC2.pdf"), ("B", B)]:
+for label, path in [("A", ROOT / "GEM_V3_RC2/02_renders/A_after/A-RC2.pdf"), ("C", ROOT / "GEM_V3_RC2/02_renders/C_after/C-RC2.pdf"), ("B", BPDF)]:
     if path.exists():
         info = subprocess.run(["pdfinfo", str(path)], capture_output=True, text=True).stdout
         tagged = "yes" in re.search(r"Tagged:\s+(\w+)", info).group(1)
@@ -92,7 +96,7 @@ for label, path in [("A", ROOT / "GEM_V3_RC2/02_renders/A_after/A-RC2.pdf"), ("C
         rows.append((f"PDF embedded fonts", label, "INFO", ", ".join(names)))
 
 # alt text
-for label, path in [("A", A), ("C", C)]:
+for label, path in [("A", A), ("B", B), ("C", C)]:
     z = zipfile.ZipFile(path); pics = 0; with_alt = 0
     for n in z.namelist():
         if n.startswith("ppt/slides/slide") and n.endswith(".xml"):
@@ -112,21 +116,12 @@ auth = {d: first(d, r"1 · V3 Final Brand Approval Register|1 V3 Final Brand App
 rows.append(("Cross-doc: authority list anchor present", "A/B/C", "PASS" if auth["A"] and auth["C"] else "FAIL", f"A={bool(auth['A'])} B={bool(auth['B'])} C={bool(auth['C'])}"))
 
 passes = sum(1 for r in rows if r[2] == "PASS"); fails = [r for r in rows if r[2] == "FAIL"]
-md = ["# GEM™ V3.0 RC2 — Automated Consistency Report", "",
-      f"Inputs: A = `01_working/A-RC2.pptx` (RC2), C = `01_working/C-RC2.pptx` (RC2), B = `00_originals/GEM_Digital_Design_System_V3.0_1.pdf` (**unchanged review PDF; no editable source**). Checks run over slide text, tables and speaker notes (A, C) and page text (B).", "",
-      f"**Result: {passes} PASS · {len(fails)} FAIL · {sum(1 for r in rows if r[2]=='INFO')} INFO.** Every FAIL on Part B is expected until its source is regenerated per `PartB_RC2_Exact_Patch_Spec.md`; FAILs on A or C would block RC2 and there are {sum(1 for r in fails if r[1] in ('A','C'))}.", "",
+md = ["# GEM™ V3.0 RC2 — Final Automated Consistency Report (A RC2 · B RC2 · C RC2)", "",
+      f"Inputs: A = `01_working/A-RC2.pptx` (RC2), C = `01_working/C-RC2.pptx` (RC2), B = `PartB_RC2/01_source/B-RC2.pptx` (RC2, editable deck source; PDF export checked for tagging and fonts). Checks run over slide text, tables and speaker notes (A, C) and page text (B).", "",
+      f"**Result: {passes} PASS · {len(fails)} FAIL · {sum(1 for r in rows if r[2]=='INFO')} INFO.** Target: zero unexplained conflicts; every remaining FAIL is listed with its explanation below.", "",
       "| Check | Doc | Result | Detail |", "|---|---|---|---|"]
 for r in rows: md.append("| " + " | ".join(str(x).replace("|", "/") for x in r) + " |")
-md += ["", "## Part B failures mapped to patch entries", "",
-       "| Check | Patch entry |", "|---|---|",
-       "| Stale 'not yet issued' / 'Production Standards not issued' | PB-04, PB-23 |",
-       "| Version string / document ID | PB-01, PB-22 |",
-       "| Authority order and domain ownership | PB-05 |",
-       "| Bilingual default cross-reference | PB-20 |",
-       "| File naming X12 | PB-26 |",
-       "| Tier status AC03 / VAL-01 | not applicable to B (no tier status stated) |",
-       "| Six-level hierarchy wording | PB-16 (B lists six levels; the phrase is added) |",
-       "| Tagged PDF, embedded fonts | PB-EXPORT |", ""]
-(ROOT / "qa/GEM_V3_RC2_Consistency_Report.md").write_text("\n".join(md), encoding="utf-8")
+md += [""]
+(ROOT / "qa/GEM_V3_RC2_Final_Consistency_Report.md").write_text("\n".join(md), encoding="utf-8")
 print(f"{passes} PASS, {len(fails)} FAIL")
 for r in fails: print("  FAIL", r)
