@@ -715,7 +715,7 @@
         "$type": "dimension",
         "status": "APPROVED",
         "decision": "H11",
-        "description": "Below: no-spark micro mark (H12), not supplied"
+        "description": "Below: no-spark symbol (H12), supplied in the vector kit; acceptance pending"
       }
     },
     "glyph": {

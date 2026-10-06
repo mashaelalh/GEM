@@ -1,1 +1,13 @@
-# GEM
+# GEM™
+
+Working repository for the GEM™ V3.0 brand system. Status: **RC2, evidence gates remain open. Nothing here is labelled Approved V3.0.**
+
+| Folder | Content |
+|---|---|
+| `GEM_V3_RC2/04_release` | Part A Brand Guidelines and Part C Production Standards (PPTX and review PDF) |
+| `PartB_RC2/05_release` | Part B Digital Design System (PPTX, PDF, token package) |
+| `Amenities_Portfolio_PartD_RC2` | Part D Amenities & Packaging concept portfolio, approved mockups, change log |
+| `GEM_Brand_Assets_v1.0` | Official vector logo kit (SVG, PDF, EPS, PNG, icons, motion), layout-matched logo files, outlined tagline, palette and status-label SVGs |
+| `qa` | Verified change registers, consistency report, open evidence register, release notes, asset sync change log |
+
+Logos are the supplied vector kit, used unchanged. Acceptance as production master is pending (VAL-02).
