@@ -116,7 +116,7 @@ def label_panel(w, h, colour, product, func, lines=None, bilingual=False, tier="
         fl = fit_font(d, "inter", ln, inner, int(h * 0.038)); d.text((pad, y), ln, font=fl, fill=ink); y += int(h * 0.055)
     if co_brand:
         y = h - int(h * 0.19); d.line((pad, y, w - pad, y), fill=ink, width=max(1, h // 400)); y += int(h * 0.03)
-        d.text((pad, y), "Supplied by GEM™ for", font=f_small, fill=ink); y += int(h * 0.05)
+        d.text((pad, y), "Supplied by GEM™ for", font=fit_font(d, "inter", "Supplied by GEM™ for", inner, int(h * 0.038)), fill=ink); y += int(h * 0.05)
         d.text((pad, y), co_brand, font=fit_font(d, "jost", co_brand, inner, int(h * 0.065)), fill=ink)
     return im
 
@@ -257,7 +257,7 @@ def render_all():
     # hero: three bottles on beige surface, dark wall
     c = scene_surface(W, H, INK, BEIGE, 0.58)
     row(c, [fb("Shampoo", "Hair cleanser", int(H * 0.66)), fb("Hand Wash", "Hand cleanser", int(H * 0.66), pump=True), fb("Body Wash", "Body cleanser", int(H * 0.60))], int(H * 0.84), int(W * 0.05), **SHD)
-    status_stamp(c, colour=BEIGE); save(c, "01_hero_family")
+    status_stamp(c, colour=INK); save(c, "01_hero_family")
     # product pages
     for i, (p, f) in enumerate(FAMILY):
         pump = p == "Hand Wash"; key = f"{i+4:02d}_{p.replace(' ', '_').lower()}"
@@ -277,7 +277,7 @@ def render_all():
     row(c, objs, int(H * 0.85), int(W * 0.03), start=int(W * 0.55), **SHD); status_stamp(c); save(c, "07_vanity_scene")
     # washroom scene: dark wall, white counter band
     c = scene_surface(W, H, INK, WHITE, 0.80); hw = fb("Hand Wash", "Hand cleanser", int(H * 0.66), pump=True)
-    place(c, hw, int(W * 0.44), int(H * 0.82) - hw.height, **SHD); status_stamp(c, colour=BEIGE); save(c, "08_handwash_washroom")
+    place(c, hw, int(W * 0.44), int(H * 0.82) - hw.height, **SHD); status_stamp(c, colour=INK); save(c, "08_handwash_washroom")
     # family lineup
     c = canvas(W, H, WHITE, texture=True)
     row(c, [fb(p, f, int(H * (0.62 if p != "Body Lotion" else 0.54)), pump=(p == "Hand Wash")) for p, f in FAMILY], int(H * 0.86), int(W * 0.045), **SHL); status_stamp(c); save(c, "09_family_lineup")
@@ -297,26 +297,26 @@ def render_all():
     status_stamp(c, "STRUCTURAL CONCEPT · REQUIRES SUPPLIER VALIDATION"); save(c, "11_primary_pack_alternatives")
     # secondary packaging
     c = scene_surface(W, H, INK, BEIGE, 0.60)
-    sleeve = carton(int(H * 0.26), int(H * 0.56), int(H * 0.12), front=BEIGE, label=lambda w, h: label_panel(w, h, BEIGE, "Amenity set", "Five pieces · [PENDING]", lines=["[REQUIRED MARKET INFORMATION]", "[SKU]"], symbol_h=int(h * 0.26)), lid=False)
-    big_carton = carton(int(H * 0.50), int(H * 0.20), int(H * 0.10), front=INK, label=lambda w, h: label_panel(w, h, INK, "Shampoo", "Hair cleanser", lines=["[QUANTITY]", "[SKU] · v[PENDING]"], symbol_h=int(h * 0.22)))
-    setbox = carton(int(H * 0.22), int(H * 0.42), int(H * 0.16), front=WHITE, label=lambda w, h: label_panel(w, h, WHITE, "Property edition", "[PROPERTY NAME] · CONDITIONAL", lines=["[SKU]"], symbol_h=int(h * 0.26)))
-    row(c, [sleeve, big_carton, setbox], int(H * 0.84), int(W * 0.06), **SHD); status_stamp(c, colour=BEIGE); save(c, "12_secondary_packaging")
+    sleeve = carton(int(H * 0.22), int(H * 0.44), int(H * 0.10), front=BEIGE, label=lambda w, h: label_panel(w, h, BEIGE, "Amenity set", "Five pieces · [PENDING]", lines=["[REQUIRED MARKET INFORMATION]", "[SKU]"], symbol_h=int(h * 0.26)), lid=False)
+    big_carton = carton(int(H * 0.44), int(H * 0.18), int(H * 0.09), front=INK, label=lambda w, h: label_panel(w, h, INK, "Shampoo", "Hair cleanser", lines=["[QUANTITY]", "[SKU] · v[PENDING]"], symbol_h=int(h * 0.22)))
+    setbox = carton(int(H * 0.20), int(H * 0.34), int(H * 0.13), front=WHITE, label=lambda w, h: label_panel(w, h, WHITE, "Property edition", "[PROPERTY NAME] · CONDITIONAL", lines=["[SKU]"], symbol_h=int(h * 0.26)))
+    row(c, [sleeve, big_carton, setbox], int(H * 0.84), int(W * 0.05), **SHD); status_stamp(c, colour=INK); save(c, "12_secondary_packaging")
     # extensions
     c = canvas(W, H, WHITE, texture=True); objs = []
     for name in ["Soap", "Dental kit", "Shaving kit", "Vanity kit", "Shower cap", "Comb"]:
         col = [INK, BEIGE, WHITE][len(name) % 3]
-        objs.append(carton(int(H * 0.26), int(H * 0.20), int(H * 0.07), front=col, label=lambda w, h, n=name, cc=col: tag_label(w, h, cc, n, "CONCEPT RANGE EXTENSION"), lid=False))
+        objs.append(carton(int(H * 0.22), int(H * 0.15), int(H * 0.055), front=col, label=lambda w, h, n=name, cc=col: tag_label(w, h, cc, n, "CONCEPT RANGE EXTENSION"), lid=False))
     row(c, objs, int(H * 0.72), int(W * 0.025), **SHL); status_stamp(c, "CONCEPT RANGE EXTENSION · COMMERCIAL SCOPE [PENDING]"); save(c, "13_personal_care_extensions")
     c = canvas(W, H, BEIGE, texture=True); objs = []
     for name, col in [("Sewing kit", INK), ("Slippers", WHITE), ("Laundry bag", INK), ("Tissue box", WHITE), ("Shoe-care kit", INK), ("Cotton pads", WHITE)]:
-        objs.append(carton(int(H * 0.28), int(H * 0.21), int(H * 0.08), front=col, label=lambda w, h, n=name, cc=col: tag_label(w, h, cc, n, "CONCEPT · SCOPE [PENDING]"), lid=False))
+        objs.append(carton(int(H * 0.24), int(H * 0.16), int(H * 0.06), front=col, label=lambda w, h, n=name, cc=col: tag_label(w, h, cc, n, "CONCEPT · SCOPE [PENDING]"), lid=False))
     row(c, objs, int(H * 0.72), int(W * 0.025), **SHL); status_stamp(c, "GUEST ACCESSORIES · CONCEPT ONLY"); save(c, "14_guest_accessories")
     # room touchpoints
     c = scene_surface(W, H, INK, BEIGE, 0.64); objs = []
     for n, col in [("Stationery", WHITE), ("Coffee & tea", INK), ("Laundry", BEIGE)]:
         objs.append(carton(int(H * 0.30), int(H * 0.24), int(H * 0.09), front=col, label=lambda w, h, nn=n, cc=col: tag_label(w, h, cc, nn, "CONCEPT / NOT PRODUCTION ARTWORK"), lid=False))
     objs.append(fb("Body Lotion", "Body moisturiser", int(H * 0.56), scheme="beige"))
-    row(c, objs, int(H * 0.85), int(W * 0.06), **SHD); status_stamp(c, colour=BEIGE); save(c, "15_room_touchpoints")
+    row(c, objs, int(H * 0.85), int(W * 0.05), **SHD); status_stamp(c, colour=INK); save(c, "15_room_touchpoints")
     # property edition
     c = canvas(W, H, WHITE, texture=True); bh = int(H * 0.72)
     pe = bottle(bh, int(bh * 0.28), body=INK, cap=BLACK, label=lambda w, h: label_panel(w, h, BEIGE, "Shampoo", "Hair cleanser", tier="Property edition · [PROPERTY NAME]"))
@@ -377,4 +377,11 @@ def render_all():
     row(c, objs, int(H * 0.86), int(W * 0.07), **SHL); status_stamp(c); save(c, "03_one_system_scales")
 
 if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "tail":
+        _save = save
+        def save(im, name, scale=1 / SS):
+            if os.path.exists(os.path.join(OUT, name + ".png")): print("skip", name); return
+            _save(im, name, scale)
+        globals()["save"] = save
     render_all()
