@@ -1,11 +1,5 @@
-# Native Word test record
+# Native Word R1 Test Record
 
-2026-10-07, approximately 15:25–15:36 Asia/Riyadh. Microsoft Word for Mac, existing local installation, controlled through the native UI.
+2026-10-07: revised English, Arabic and bilingual First Page files opened in Word for Mac without repair prompts. Each status bar displayed Page 1 of 1. Native page views showed the prescribed spaced tagline, regular subject/signatory, narrowed Latin body and comfortable leading. Arabic showed correctly shaped RTL recipient/body, an unmirrored right-side logo and LTR reference/date placeholders. Bilingual showed Arabic-leading recipient/subject/body and the shared signature. The footer accessibility text retained [T], [E], [W], Page 1 of 1 in logical LTR order.
 
-- English First Page: opened without repair dialog; supplied logo, metadata, subject/body and signature visually inspected; header/footer fields present in AX structure.
-- Arabic First Page: opened without repair dialog; paragraph RTL, mixed date/reference LTR values, guillemet placeholders and shaping inspected.
-- Saved a disposable copy as QA_Word_Arabic_Reopen.docx, converted to current Word format. Inserted the Arabic text “اختبار تحرير فقط”, saved, closed and reopened. AX document content retained the edit; page count stayed one in subsequent export.
-- Bilingual First Page: opened without repair dialog; Arabic recipient/subject/body first, English second, one shared signature and two language closings inspected. Its AX text order followed those body sections.
-- Original delivery files were not saved by the native QA flow. Other five variants and multi-page fixtures were not tested natively in Word. No screen-reader or independent native Arabic reviewer participated.
-
-The record is a local self-check, not formal VAL-07/08/15/19 acceptance.
+No save/edit/reopen test was repeated on R1. The prior original-revision Arabic edit/reopen evidence is archived and does not approve R1. Five remaining variants and all multipage fixtures were rendered and inspected in LibreOffice, not independently exercised in native Word. Native linguistic/AT/accessibility and required-platform full Word QA remain pending. Header exact-leading inheritance was found to clip artwork in the aggregate PDF during the R1 render review and corrected to automatic inline-logo line height before final delivery; final PDF and individual templates were rerendered.

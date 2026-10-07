@@ -16,20 +16,23 @@ def el(name,**attrs):
  return x
 
 def run(p,text,font='Inter',size=10.5,bold=False,arabic=False,color=INK):
- r=p.add_run(text); r.font.name=font;r.font.size=Pt(size);r.font.bold=bold;r.font.color.rgb=RGBColor.from_string(color)
+ r=p.add_run(text); r.font.name=font;r.font.size=Pt(size);r.font.bold=False;r.font.color.rgb=RGBColor.from_string(color)
  rp=r._element.get_or_add_rPr();rf=rp.find(qn('w:rFonts'))
  for a in ['ascii','hAnsi','cs','eastAsia']:rf.set(qn('w:'+a),font)
  rp.append(el('w:lang',val='ar-SA' if arabic else 'en-GB',bidi='ar-SA' if arabic else 'en-GB'))
  rp.append(el('w:rtl',val='1' if arabic else '0'));rp.append(el('w:szCs',val=round(size*2)))
- if arabic and bold:rp.append(el('w:bCs'))
+ rp.append(el('w:bCs',val='0'))
  return r
 
 def para(d,text='',rtl=False,font=None,size=None,bold=False,after=6,before=0,style=None,keep=False):
+ is_body=(not rtl and size is None and font is None and text.startswith(('Please share','We would','We request','This letter','Additional sample','SAMPLE CONTENT. This paragraph')))
+ if is_body:style='Body Text'
  p=d.add_paragraph(style=style);p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
  pp=p._p.get_or_add_pPr();pp.append(el('w:bidi',val='1' if rtl else '0'))
  if rtl:pp.find(qn('w:jc')).set(qn('w:val'),'start')
  p.paragraph_format.space_after=Pt(after);p.paragraph_format.space_before=Pt(before)
- p.paragraph_format.line_spacing=Pt((size or 11.5)*1.75) if rtl else Pt((size or 10.5)*1.4);p.paragraph_format.keep_with_next=keep;p.paragraph_format.widow_control=True
+ p.paragraph_format.line_spacing=Pt((size or 11.5)*1.75) if rtl else Pt((size or 10.5)*1.6);p.paragraph_format.keep_with_next=keep;p.paragraph_format.widow_control=True
+ if is_body:p.paragraph_format.right_indent=Mm(30)
  if text:run(p,text,font or ('Noto Sans Arabic' if rtl else 'Inter'),size or (11.5 if rtl else 10.5),bold,rtl)
  return p
 
@@ -55,14 +58,14 @@ def logo(p,width,color='ink'):
 
 def header(sec,rtl=False,cont=False,executive=False,minimal=False):
  def build(h,first):
-  p=h.paragraphs[0];p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
-  p.paragraph_format.space_after=Pt(0)
+  p=h.paragraphs[0];p._p.get_or_add_pPr().append(el('w:bidi',val=0));p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
+  p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=1.0
   if first:
    width=36 if executive else 32;logo(p,width,'black' if minimal else 'ink')
    if not minimal:
-    p=h.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
+    p=h.add_paragraph();p._p.get_or_add_pPr().append(el('w:bidi',val=0));p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
     p.paragraph_format.space_before=Mm(12);p.paragraph_format.space_after=Mm(4)
-    run(p,'HOSPITALITY, IN PERFECT PROPORTION','Jost',8)
+    p.paragraph_format.line_spacing=Pt(15);r=run(p,'HOSPITALITY, IN PERFECT PROPORTION','Jost',10.5);r._element.get_or_add_rPr().append(el('w:spacing',val='38'))
    else:p.paragraph_format.space_after=Mm(12)
   else:
    run(p,'GEM™','Jost',9);run(p,'    [REFERENCE NUMBER]','Inter',8)
@@ -73,13 +76,32 @@ def header(sec,rtl=False,cont=False,executive=False,minimal=False):
 
 def footer(sec,rtl=False,minimal=False):
  for f in ([sec.first_page_footer,sec.footer] if sec.different_first_page_header_footer else [sec.footer]):
-  p=f.paragraphs[0];p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
+  p=f.paragraphs[0];p._p.get_or_add_pPr().append(el('w:bidi',val=0));p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
   pp=p._p.get_or_add_pPr();b=el('w:pBdr');b.append(el('w:top',val='single',sz=4,color=BLACK if minimal else BEIGE,space=6));pp.append(b)
   p.paragraph_format.space_after=Pt(4);run(p,'GEM™   [ADDRESS] · [CITY] · [COUNTRY] · [POSTAL CODE]',size=7.5)
-  p=f.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT;p.paragraph_format.space_after=Pt(6)
+  p=f.add_paragraph();p._p.get_or_add_pPr().append(el('w:bidi',val=0));p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT;p.paragraph_format.space_after=Pt(6)
   run(p,'[T]   [E]   [W]',size=7.5);run(p,' '*5+'Page ',size=7.5);field(p,'PAGE');run(p,' of ',size=7.5);field(p,'NUMPAGES')
-  p=f.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
+  p=f.add_paragraph();p._p.get_or_add_pPr().append(el('w:bidi',val=0));p.alignment=WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
   run(p,'WORKING APPLICATION / PENDING VALIDATION',size=6.5)
+
+def configure_edit_styles(d,rtl=False):
+ for name in ['Normal','Body Text','Heading 1','Heading 2','Heading 1 Char','Heading 2 Char']:
+  if name not in d.styles:continue
+  st=d.styles[name];style_rtl=rtl and name!='Body Text';rp=st.element.get_or_add_rPr()
+  for child in list(rp):
+   if child.tag in [qn('w:rFonts'),qn('w:b'),qn('w:bCs'),qn('w:lang'),qn('w:spacing'),qn('w:szCs')]:rp.remove(child)
+  rp.append(el('w:rFonts',ascii='Inter' if name in ['Normal','Body Text'] else 'Jost',hAnsi='Inter' if name in ['Normal','Body Text'] else 'Jost',cs='Noto Sans Arabic',eastAsia='Inter'))
+  rp.append(el('w:b',val='0'));rp.append(el('w:bCs',val='0'));rp.append(el('w:spacing',val='0'))
+  rp.append(el('w:lang',val='ar-SA' if style_rtl else 'en-GB',bidi='ar-SA'))
+  rp.append(el('w:szCs',val=23 if name in ['Normal','Body Text'] else 24))
+  if st.type==1:
+   pp=st.element.get_or_add_pPr();pp.append(el('w:bidi',val='1' if style_rtl else '0'));pp.append(el('w:jc',val='start' if style_rtl else 'left'))
+   if name in ['Normal','Body Text']:
+    pp.append(el('w:spacing',line=403 if style_rtl else 336,lineRule='exact',after=120))
+   if name=='Body Text':st.paragraph_format.right_indent=Mm(30)
+ defaults=d.styles.element.find(qn('w:docDefaults'));rp=defaults.find(qn('w:rPrDefault')).find(qn('w:rPr'))
+ for child in list(rp):rp.remove(child)
+ rp.append(el('w:rFonts',ascii='Inter',hAnsi='Inter',cs='Noto Sans Arabic',eastAsia='Inter'));rp.append(el('w:lang',val='ar-SA' if rtl else 'en-GB',bidi='ar-SA'));rp.append(el('w:sz',val=21));rp.append(el('w:szCs',val=23));rp.append(el('w:b',val=0));rp.append(el('w:bCs',val=0))
 
 def embed_fonts(path):
  with zipfile.ZipFile(path) as z: data={n:z.read(n) for n in z.namelist()}
@@ -88,7 +110,7 @@ def embed_fonts(path):
  for family,dirname in [('Inter','inter'),('Jost','jost'),('Noto Sans Arabic','notosansarabic')]:
   fs=ft.xpath('w:font[@w:name="'+family+'"]',namespaces={'w':W})
   node=fs[0] if fs else E.SubElement(ft,'{'+W+'}font',{'{'+W+'}name':family})
-  for style in ['Regular','Bold']:
+  for style in ['Regular']:
    font=FONTDIR/dirname/(family.replace(' ','')+'-'+style+'.ttf'); raw=bytearray(font.read_bytes());key=uuid.uuid4();kb=key.bytes[::-1]
    for i in range(32):raw[i]^=kb[i%16]
    filename=family.replace(' ','')+'-'+style+'.odttf';data['word/fonts/'+filename]=bytes(raw);rid='rId'+family.replace(' ','')+style
@@ -105,7 +127,7 @@ def create(name,lang='en',cont=False,variant='',pages=1,stress=False,return_docu
  sec.header_distance=Mm(18);sec.footer_distance=Mm(12)
  n=d.styles['Normal'];n.font.name='Inter';n.font.size=Pt(10.5);n.font.color.rgb=RGBColor.from_string(INK)
  for st in ['Heading 1','Heading 2']:d.styles[st].font.name='Jost';d.styles[st].font.size=Pt(12);d.styles[st].font.color.rgb=RGBColor.from_string(INK)
- rtl=lang!='en';header(sec,rtl,cont,variant=='Executive',variant=='Minimal');footer(sec,rtl,variant=='Minimal')
+ rtl=lang!='en';configure_edit_styles(d,rtl);header(sec,rtl,cont,variant=='Executive',variant=='Minimal');footer(sec,rtl,variant=='Minimal')
  cp=d.core_properties;cp.title='GEM Branded Letterhead '+name;cp.subject='Working RC2 application pending validation';cp.author='GEM';cp.language='ar-SA' if rtl else 'en-GB'
  # Paragraph-level bidi governs correspondence; page section remains unmirrored
  p=para(d,'SAMPLE CONTENT'+(' · PENDING LOCALIZATION APPROVAL' if rtl else ''),size=7.5,after=9)

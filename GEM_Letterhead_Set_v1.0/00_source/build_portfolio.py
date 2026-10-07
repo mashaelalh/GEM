@@ -20,5 +20,6 @@ for lang,cont,variant in items:
 # headings/fonts styled identically to templates
 for name in ['Normal','Heading 1','Heading 2']:
  D.styles[name].font.name='Inter' if name=='Normal' else 'Jost';D.styles[name].font.color.rgb=RGBColor.from_string(INK);D.styles[name].font.size=Pt(10.5 if name=='Normal' else 12)
+configure_edit_styles(D,False)
 D.core_properties.title='GEM Branded Letterhead Set v1.0';D.core_properties.subject='Working RC2 application proof portfolio';D.core_properties.language='en-GB'
 p=R/'00_source/GEM_Letterhead_Portfolio.docx';D.save(p);embed_fonts(p)

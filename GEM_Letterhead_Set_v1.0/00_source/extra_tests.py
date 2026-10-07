@@ -1,7 +1,7 @@
 from build_letterheads import *
 from docx.oxml import OxmlElement
 for lang,count in [('en',8),('ar',10),('bi',10)]:
- for n in [count,count+12]:
+ for n in ([8,16,20] if lang=='en' else [count,count+12]):
   display={'en':'English','ar':'Arabic','bi':'Bilingual'}[lang]
   d=Document(R/'01_templates'/('GEM_Letterhead_'+display+'_First_Page.docx'))
   closing=next(p for p in d.paragraphs if p.text in ['Yours sincerely,','وتفضلوا بقبول التحية،'])

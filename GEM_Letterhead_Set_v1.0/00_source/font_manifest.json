@@ -15,7 +15,7 @@
     "family": "Inter",
     "fsType": 0,
     "source_commit": "2c605eeda2de57af2b34822b79986f5140299862",
-    "status": "WORKING BUILD / VAL-05 AND VAL-19 OPEN"
+    "status": "ARCHIVED INPUT / 700 NOT USED IN REVIEW R1"
   },
   {
     "file": "00_source/fonts/inter/Inter-Regular.ttf",
@@ -33,7 +33,7 @@
     "family": "Noto Sans Arabic",
     "fsType": 0,
     "source_commit": "2c605eeda2de57af2b34822b79986f5140299862",
-    "status": "WORKING BUILD / VAL-05 AND VAL-19 OPEN"
+    "status": "ARCHIVED INPUT / 700 NOT USED IN REVIEW R1"
   },
   {
     "file": "00_source/fonts/notosansarabic/NotoSansArabic-Regular.ttf",
@@ -60,7 +60,7 @@
     "family": "Jost",
     "fsType": 0,
     "source_commit": "2c605eeda2de57af2b34822b79986f5140299862",
-    "status": "WORKING BUILD / VAL-05 AND VAL-19 OPEN"
+    "status": "ARCHIVED INPUT / 700 NOT USED IN REVIEW R1"
   },
   {
     "file": "00_source/fonts/jost/Jost[wght].ttf",

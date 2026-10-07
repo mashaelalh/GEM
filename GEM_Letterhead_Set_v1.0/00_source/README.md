@@ -1,6 +1,6 @@
 # Controlled authoring source
 
-Editable source: all eight delivery DOCX files, specification DOCX, and GEM_Letterhead_Portfolio.docx. Exact official artwork is archived unchanged in reused_assets; original repo paths remain in the source register. Fonts include pinned source binaries, static office instances, metadata and OFL licences. Font/master acceptance gates remain open.
+Editable source: all eight delivery DOCX files, specification DOCX, and GEM_Letterhead_Portfolio.docx. Exact official artwork is archived unchanged in reused_assets; original repo paths remain in the source register. Fonts include pinned source binaries, static office instances, metadata and OFL licences. R1 uses and embeds only Regular 400; unused Bold 700 inputs are archived. Font/master acceptance gates remain open.
 
 Python source requires Python 3, python-docx, lxml, fonttools, pypdf and Pillow for evidence sheets. Run build_letterheads.py, build_specs.py, build_portfolio.py sequentially from any directory. These scripts overwrite only this application folder's generated files; make a working copy before changes. prepare.py is an optional pinned font regeneration step, not required for ordinary edits. extra_tests.py builds disposable QA fixtures.
 
