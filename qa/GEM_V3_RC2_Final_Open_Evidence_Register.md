@@ -5,7 +5,7 @@ Status values are the V3 Approval Register's own (supplied 2026-10-06). **No gat
 | ID | Evidence required | Owner | Register status | RC2 effect (A / B / C) |
 |---|---|---|---|---|
 | VAL-01 | Commercial scope, capability evidence, named approval | Brand Owner + Commercial Lead | In progress | Tiers and claims CONDITIONAL in A 13/60, B 27, C 27 |
-| VAL-02 | Vector logo masters, micro mark, stacked, white symbol | Design Custodian | Not started | PENDING PRODUCTION MASTER everywhere; B deck carries no artwork |
+| VAL-02 | Vector logo masters, no-spark symbol, stacked, white symbol | Design Custodian | Not started | Vector kit received (horizontal, stacked, symbol, no-spark, icons; SVG/PDF/EPS/PNG) and now shown in A, C and D. Brand Owner acceptance as production master, master artwork ID and version (H21) not recorded: gate stays open. Wording "KIT RECEIVED · ACCEPTANCE PENDING" in A 26–29, 78; C 7, 10, 75; B 35 |
 | VAL-03 | Trademark review | Legal / IP Counsel | Not started | — |
 | VAL-04 | Artwork ownership | Brand Owner / Legal | Not started | — |
 | VAL-05 | Font licence and builds | Design Custodian / Legal | In progress | B 9 records weights in use and OFL reference; builds unverified; C 15 owns control |

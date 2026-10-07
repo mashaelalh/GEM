@@ -117,7 +117,7 @@ Inputs: A = `01_working/A-RC2.pptx` (RC2), C = `01_working/C-RC2.pptx` (RC2), B 
 | PDF embedded fonts | C | INFO | Inter-Regular, Jost-Regular |
 | PDF export tagged | B | PASS | Tagged: True |
 | PDF embedded fonts | B | INFO | Inter-Regular, Jost-Regular, LiberationMono, NotoSansArabic-Regular, OpenSymbol |
-| Alt text on every picture | A | PASS | 87/87 |
+| Alt text on every picture | A | PASS | 89/89 |
 | Alt text on every picture | B | PASS | 0/0 |
 | Alt text on every picture | C | PASS | 14/14 |
 | Cross-doc: authority list anchor present | A/B/C | PASS | A=True B=False C=True |

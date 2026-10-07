@@ -43,3 +43,6 @@ Brand name, tagline, secondary line, principles, palette, Ink/Black roles, typog
 3. Brand Owner decisions: named holders (AC19), "Core Collection", asset-ID/checksum convention, family-name-at-tier-level, currency format, code typeface.
 4. Physical validation chain (VAL-02 → VAL-09/10/11) under Part C.
 5. AC20 only after the above.
+
+## Addendum — vector logo kit and Part D (2026-10-06)
+Parts A, B and C now reflect the supplied vector logo kit and show it in place of the earlier raster logos. Part D (Amenities & Packaging concept portfolio) is added with its approved mockups. Gates VAL-02, VAL-03, VAL-04 and AC20 remain open; the status is still "RC2 — SYNCHRONIZED · SYSTEM READY — EVIDENCE GATES REMAIN". Details: `qa/GEM_V3_RC2_Asset_Sync_Change_Log.md`.
